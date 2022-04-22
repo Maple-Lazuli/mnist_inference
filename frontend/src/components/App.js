@@ -62,6 +62,7 @@ class App extends React.Component {
 
                 <div className="ui grid">
                     <div className="eight wide column" onMouseUp={this.sendChanges}>
+                    <h2 class="ui header">Draw Canvas</h2>
                         <CanvasDraw
                             ref={canvasDraw => (this.saveableCanvas = canvasDraw)}
                             brushColor={"white"}
@@ -74,6 +75,7 @@ class App extends React.Component {
                     </div>
 
                     <div className="eight wide column">
+                    <h2 class="ui header">Input Scaled Down</h2>
                         <img src={this.state.imgsrc} width={400} height={400} alt="Image To Classify" />
                     </div>
 
