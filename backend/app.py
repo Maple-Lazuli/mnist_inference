@@ -18,14 +18,20 @@ import base64
 app = Flask(__name__)
 CORS(app)
 
-sess = tf.compat.v1.Session()
-saver = tf.compat.v1.train.import_meta_graph("./model/mnist.meta")
-saver.restore(sess, tf.compat.v1.train.latest_checkpoint("./model"))
-graph = tf.compat.v1.get_default_graph()
-input_image = graph.get_tensor_by_name("mnist_model/X:0")
-classifier_label = graph.get_tensor_by_name("mnist_model/Y_Prediction/y_pred:0")
-softmax_classifier = tf.compat.v1.math.softmax(classifier_label)
-hold_prob = graph.get_tensor_by_name("mnist_model/hold_prob:0")
+@app.before_first_request
+def run_first():
+	global sess
+	global softmax_classifier
+	global input_image
+	global hold_prob
+	sess = tf.compat.v1.Session()
+	saver = tf.compat.v1.train.import_meta_graph("./model/mnist.meta")
+	saver.restore(sess, tf.compat.v1.train.latest_checkpoint("./model"))
+	graph = tf.compat.v1.get_default_graph()
+	input_image = graph.get_tensor_by_name("mnist_model/X:0")
+	classifier_label = graph.get_tensor_by_name("mnist_model/Y_Prediction/y_pred:0")
+	softmax_classifier = tf.compat.v1.math.softmax(classifier_label)
+	hold_prob = graph.get_tensor_by_name("mnist_model/hold_prob:0")
 
 
 @app.route("/images", methods=["POST"])
