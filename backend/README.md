@@ -4,7 +4,7 @@
 
 To pull and run the existing image on Dockerhub, execute the following in a termnial
 ```shell
-sudo docker run -d -p 3033:3033 lovelylazuli/mnist-inference-backend
+sudo docker run -d -p 3033:3033 --hostename lovelylazuli/mnist-inference-backend
 ```
 
 ## Rebuild
